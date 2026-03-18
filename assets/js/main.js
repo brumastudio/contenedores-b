@@ -161,7 +161,6 @@
       const phone = formData.get("phone");
       const message = formData.get("message");
 
-      // Build WhatsApp message as fallback
       const waMessage = encodeURIComponent(
         `Hola, soy ${name}. ${message} Mi teléfono: ${phone}`
       );
