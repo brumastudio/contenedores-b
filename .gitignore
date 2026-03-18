@@ -1,0 +1,10 @@
+.DS_Store
+.playwright-mcp/
+*.output
+
+# Playwright screenshots
+hero-*.png
+mobile-menu-*.png
+medidas-*.png
+transport-*.png
+productos-*.png
