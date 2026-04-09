@@ -154,19 +154,62 @@
   const contactForm = document.getElementById("contact-form");
 
   if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
+    const statusEl = document.getElementById("form-status");
+    const submitBtn = contactForm.querySelector(".form-submit");
+    const submitLabel = contactForm.querySelector(".form-submit-label");
+    const ENDPOINT = "/api/contact";
+
+    const setStatus = (kind, text) => {
+      if (!statusEl) return;
+      statusEl.className = `form-status form-status--${kind}`;
+      statusEl.textContent = text;
+    };
+
+    contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      if (!contactForm.checkValidity()) {
+        setStatus("error", "Por favor completa todos los campos.");
+        contactForm.reportValidity();
+        return;
+      }
+
       const formData = new FormData(contactForm);
-      const name = formData.get("name");
-      const phone = formData.get("phone");
-      const message = formData.get("message");
+      const payload = {
+        name: formData.get("name"),
+        phone: formData.get("phone"),
+        message: formData.get("message"),
+        website: formData.get("website") || "",
+      };
 
-      const waMessage = encodeURIComponent(
-        `Hola, soy ${name}. ${message} Mi teléfono: ${phone}`
-      );
-      window.open(`https://wa.me/526461980991?text=${waMessage}`, "_blank");
+      submitBtn.disabled = true;
+      if (submitLabel) submitLabel.textContent = "Enviando...";
+      setStatus("loading", "Enviando tu mensaje...");
 
-      contactForm.reset();
+      try {
+        const res = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.ok) {
+          setStatus("success", "¡Mensaje enviado! Te contactaremos pronto.");
+          contactForm.reset();
+        } else {
+          throw new Error(data.error || "send_failed");
+        }
+      } catch (err) {
+        console.error("Contact form error:", err);
+        setStatus(
+          "error",
+          "No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos por WhatsApp."
+        );
+      } finally {
+        submitBtn.disabled = false;
+        if (submitLabel) submitLabel.textContent = "Enviar mensaje";
+      }
     });
   }
 

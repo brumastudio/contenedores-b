@@ -1,0 +1,17 @@
+name = "contenedoresb-contact"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Route the worker to /api/contact on the apex domain.
+# Requires the zone "contenedoresb.com" to be on the same Cloudflare account.
+routes = [
+  { pattern = "contenedoresb.com/api/contact", zone_name = "contenedoresb.com" }
+]
+
+# Non-secret config. Secrets (MAILGUN_API_KEY) are set with:
+#   wrangler secret put MAILGUN_API_KEY
+[vars]
+MAILGUN_DOMAIN = "mg.contenedoresb.com"
+MAILGUN_FROM = "Contenedores B <noreply@mg.contenedoresb.com>"
+MAIL_TO = "Marlenac3189@gmail.com"
+ALLOWED_ORIGIN = "https://contenedoresb.com"

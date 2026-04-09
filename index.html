@@ -588,7 +588,7 @@
             Escríbenos por WhatsApp
           </a>
         </div>
-        <form id="contact-form" class="contact-form reveal">
+        <form id="contact-form" class="contact-form reveal" novalidate>
           <div class="form-group">
             <label for="name">Nombre</label>
             <input type="text" id="name" name="name" placeholder="Tu nombre completo" autocomplete="name" required />
@@ -601,10 +601,16 @@
             <label for="message">Mensaje</label>
             <textarea id="message" name="message" placeholder="¿En qué te podemos ayudar?" rows="4" required></textarea>
           </div>
+          <!-- Honeypot: must remain empty. Hidden from real users. -->
+          <div class="form-hp" aria-hidden="true">
+            <label for="website">Sitio web</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <button type="submit" class="btn btn-primary form-submit">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            Enviar mensaje
+            <span class="form-submit-label">Enviar mensaje</span>
           </button>
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>

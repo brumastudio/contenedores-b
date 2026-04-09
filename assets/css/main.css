@@ -1111,6 +1111,40 @@ button {
   justify-content: center;
 }
 
+.form-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Honeypot — visually hidden but accessible to bots */
+.form-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-status {
+  margin-top: var(--space-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-height: 1.25em;
+}
+
+.form-status--loading {
+  color: var(--color-text);
+  opacity: 0.75;
+}
+
+.form-status--success {
+  color: #1a7f37;
+}
+
+.form-status--error {
+  color: #c0392b;
+}
+
 /* --- Footer --- */
 .footer {
   background: var(--color-primary-dark);
