@@ -150,6 +150,65 @@
     }, { passive: true });
   }
 
+  // --- Team carousel ---
+  const teamGrid = document.getElementById("team-grid");
+  const teamPrev = document.querySelector(".team-nav-prev");
+  const teamNext = document.querySelector(".team-nav-next");
+
+  if (teamGrid && teamPrev && teamNext) {
+    const teamDots = document.getElementById("team-dots");
+    const cards = Array.from(teamGrid.querySelectorAll(".team-card"));
+
+    const getStep = () => {
+      const card = teamGrid.querySelector(".team-card");
+      if (!card) return teamGrid.clientWidth;
+      const style = getComputedStyle(teamGrid);
+      const gap = parseFloat(style.columnGap || style.gap) || 0;
+      return card.getBoundingClientRect().width + gap;
+    };
+
+    // Build one dot per card (used on mobile via CSS)
+    if (teamDots) {
+      cards.forEach((_, i) => {
+        const dot = document.createElement("button");
+        dot.className = "team-dot" + (i === 0 ? " active" : "");
+        dot.type = "button";
+        dot.setAttribute("aria-label", `Ir al asesor ${i + 1}`);
+        dot.addEventListener("click", () => {
+          teamGrid.scrollTo({ left: cards[i].offsetLeft, behavior: "smooth" });
+        });
+        teamDots.appendChild(dot);
+      });
+    }
+
+    const updateNavState = () => {
+      const max = teamGrid.scrollWidth - teamGrid.clientWidth - 1;
+      teamPrev.disabled = teamGrid.scrollLeft <= 0;
+      teamNext.disabled = teamGrid.scrollLeft >= max;
+
+      if (teamDots) {
+        const step = getStep();
+        const activeIndex = step > 0
+          ? Math.round(teamGrid.scrollLeft / step)
+          : 0;
+        teamDots.querySelectorAll(".team-dot").forEach((dot, i) => {
+          dot.classList.toggle("active", i === activeIndex);
+        });
+      }
+    };
+
+    teamPrev.addEventListener("click", () => {
+      teamGrid.scrollBy({ left: -getStep(), behavior: "smooth" });
+    });
+    teamNext.addEventListener("click", () => {
+      teamGrid.scrollBy({ left: getStep(), behavior: "smooth" });
+    });
+
+    teamGrid.addEventListener("scroll", updateNavState, { passive: true });
+    window.addEventListener("resize", updateNavState);
+    updateNavState();
+  }
+
   // --- Contact form ---
   const contactForm = document.getElementById("contact-form");
 
