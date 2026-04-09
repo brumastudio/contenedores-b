@@ -237,6 +237,7 @@
       const payload = {
         name: formData.get("name"),
         phone: formData.get("phone"),
+        product: formData.get("product"),
         message: formData.get("message"),
         website: formData.get("website") || "",
       };

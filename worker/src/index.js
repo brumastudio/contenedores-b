@@ -13,6 +13,7 @@
 const MAX_NAME = 120;
 const MAX_PHONE = 40;
 const MAX_MESSAGE = 2000;
+const MAX_PRODUCT = 80;
 
 export default {
   async fetch(request, env) {
@@ -54,6 +55,7 @@ export default {
 
     const name = sanitize(data.name, MAX_NAME);
     const phone = sanitize(data.phone, MAX_PHONE);
+    const product = sanitize(data.product, MAX_PRODUCT);
     const message = sanitize(data.message, MAX_MESSAGE);
 
     if (!name || !phone || !message) {
@@ -64,6 +66,7 @@ export default {
     const text = [
       `Nombre: ${name}`,
       `Teléfono: ${phone}`,
+      `Producto: ${product || "(no especificado)"}`,
       ``,
       `Mensaje:`,
       message,
@@ -77,6 +80,7 @@ export default {
       <table style="font-family:sans-serif;border-collapse:collapse;">
         <tr><td style="padding:6px 12px;color:#666;">Nombre</td><td style="padding:6px 12px;"><strong>${escapeHtml(name)}</strong></td></tr>
         <tr><td style="padding:6px 12px;color:#666;">Teléfono</td><td style="padding:6px 12px;"><a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a></td></tr>
+        <tr><td style="padding:6px 12px;color:#666;">Producto</td><td style="padding:6px 12px;">${escapeHtml(product || "(no especificado)")}</td></tr>
       </table>
       <h3 style="font-family:sans-serif;color:#1B3A5C;">Mensaje</h3>
       <p style="font-family:sans-serif;white-space:pre-wrap;">${escapeHtml(message)}</p>

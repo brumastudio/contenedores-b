@@ -84,7 +84,7 @@ const siteData = {
     {
       id: "katia",
       name: "Katia Pacheco",
-      role: "Líder de Ventas",
+      role: "Líder de Ventas — Ensenada",
       phone: "646 198 0991",
       whatsapp: "https://wa.me/526461980991",
       image: "assets/images/team/katia.jpeg",
@@ -92,7 +92,7 @@ const siteData = {
     {
       id: "diego",
       name: "Diego Gerardo Rocha",
-      role: "Líder de Ventas",
+      role: "Líder de Ventas — Santa Rosalía",
       phone: "615 103 8595",
       whatsapp: "https://wa.me/526151038595",
       image: "assets/images/team/diego.jpeg",
@@ -100,7 +100,7 @@ const siteData = {
     {
       id: "edson",
       name: "Edson Ahumada",
-      role: "Líder de Ventas",
+      role: "Líder de Ventas — La Paz",
       phone: "612 151 6545",
       whatsapp: "https://wa.me/526121516545",
       image: "assets/images/team/edson.jpeg",
